@@ -159,14 +159,14 @@ prompt_build_kernel() {
 
         # Use neutron clang environmental variables if glibc is <= 2.35
         if (( $(echo "$host_glibc <= 2.35" | bc -l) )); then
-            make -j4 ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 "$config_path" O=out
+            make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 "$config_path" O=out
             echo "Compilation started..."
-            make -j4 ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out
+            make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out
         else
             # Use san gcc environmental variables if host glibc is already latest/compatible
-            make -j4 ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- "$config_path" O=out
+            make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- "$config_path" O=out
             echo "Compilation started..."
-            make -j4 ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out
+            make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out
         fi
     else
         echo "Exiting script..."
