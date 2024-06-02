@@ -2,7 +2,7 @@
 
 # Generic automated compilation script for kernels
 # This script uses two toolchains(San-gcc/Neutron-clang) based on os environment
-# Change CROSS_COMPILE_ARM32 to CROSS_COMPILE_COMPACT if compiling 4.19 or other upstream kernel sources sources
+# Change CROSS_COMPILE_ARM32 to CROSS_COMPILE_COMPACT if compiling 4.19 or other upstream kernel sources
 # By @user_why_red
 
 # Reminder to source the script
