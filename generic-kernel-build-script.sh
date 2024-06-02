@@ -15,8 +15,9 @@ fi
 # Function to install dependencies on Debian-based systems
 install_debian_dependencies() {
     echo "Installing dependencies on Debian-based system..."
+    sudo add-apt-repository ppa:firebuild/stable
     sudo apt update
-    sudo apt install -y cpio flex bison bc libarchive-tools zstd wget curl
+    sudo apt install -y cpio firebuild flex bison bc libarchive-tools zstd wget curl
 
     if [[ $? -ne 0 ]]; then
         echo "Failed to install dependencies on Debian-based system"
@@ -30,9 +31,10 @@ install_arch_dependencies() {
     echo "Installing dependencies on Arch-based system..."
     sudo pacman -Sy
     sudo pacman -S --needed cpio flex bison bc libarchive zstd wget curl
-
+    yay -S firebuild
+    
     if [[ $? -ne 0 ]]; then
-        echo "Failed to install dependencies on Arch-based system"
+        echo "Failed to install dependencies on Arch-based system (Note: need yay as a AUR helper)"
         exit 1
     fi
     echo "Dependencies installed successfully on Arch-based system"
@@ -185,14 +187,14 @@ prompt_build_kernel() {
 
         # Use neutron clang environmental variables if glibc is <= 2.35
         if (( $(echo "$host_glibc <= 2.35" | bc -l) )); then
-            make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 "$config_path" O=out
+            firebuild make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 "$config_path" O=out
             echo "Compilation started..."
-            make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out
+            firebuild make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out
         else
             # Use san gcc environmental variables if host glibc is already latest/compatible
-            make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- "$config_path" O=out
+            firebuild make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- "$config_path" O=out
             echo "Compilation started..."
-            make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out
+            firebuild make -j$(nproc) ARCH=arm64 CC=aarch64-linux-gcc CROSS_COMPILE=aarch64-linux- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out
         fi
     else
         echo "Exiting script..."
