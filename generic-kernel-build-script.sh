@@ -156,7 +156,7 @@ prompt_clone_options() {
         echo "Full cloning kernel source..."
 	    if [ "$specific_branch" == "default "]; then
 	        specific_branch="$default_branch"
-	    if
+	    fi
             git clone --single-branch --branch="$specific_branch" "$kernel_source_link" "$HOME/kernel"
     else
         echo "Invalid input. Please type 'y' or 'n'."
