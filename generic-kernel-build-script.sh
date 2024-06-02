@@ -120,7 +120,15 @@ check_glibc_version() {
         echo "You can't use SAN-GCC, so installing Neutron Clang and patching host glibc"
         install_neutron_clang
     else
-        download_san_release_package
+	read -p "Enter which toolchain should be used to compile kernel(san/neutron): " toolchain
+	    if [ "$toolchain" == "san" ]; then
+                download_san_release_package
+	    elif [ "$toolchain" == "neutron" ]; then
+	        install_neutron_clang
+	    else
+		echo "Incorrect valid toolchain name!"
+		    exit 1
+        fi
     fi
 }
 
