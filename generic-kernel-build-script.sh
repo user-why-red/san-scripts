@@ -188,7 +188,7 @@ prompt_build_kernel() {
         fi
     else
         echo "Exiting script..."
-        exit 0
+        return 0
     fi
 }
 
