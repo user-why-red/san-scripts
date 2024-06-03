@@ -141,12 +141,8 @@ prompt_kernel_source_link() {
 
 # Function to get the default branch of the repo
 repo_url="$kernel_source_link"
-get_default_branch() {
-    owner_repo=$(echo "$repo_url" | awk -F'/' '{print $4 "/" $5}')
-    default_branch=$(curl -s "https://api.github.com/repos/$owner_repo" | grep -oP '(?<="default_branch": ")[^"]+')
-
-    echo "Default branch of $repo_url is $default_branch"
-}
+owner_repo=$(echo "$repo_url" | awk -F'/' '{print $4 "/" $5}')
+default_branch=$(curl -s "https://api.github.com/repos/$owner_repo" | grep -oP '(?<="default_branch": ")[^"]+')
 
 # Function to prompt for shallow or full clone and directory name
 prompt_clone_options() {
