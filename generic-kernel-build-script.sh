@@ -180,7 +180,7 @@ prompt_build_kernel() {
         host_glibc=$(ldd --version | head -n1 | grep -oE '[^ ]+$')
 
         # Use neutron clang environmental variables if glibc is <= 2.35
-        if (( $(echo "$host_glibc <= 2.35" | bc -l) )); then
+        if (( $(echo "$host_glibc <= 2.35" | bc -l) )) || [ "$toolchain" == "neutron" ]; then
             make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 "$config_path" O=out
             echo "Compilation started..."
             make -j$(nproc) ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 O=out
