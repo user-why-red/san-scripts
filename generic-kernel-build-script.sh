@@ -48,8 +48,8 @@ export_san_gcc_path() {
 # Function to download and extract SAN-GCC release package
 download_san_release_package() {
     echo "Downloading SAN-GCC from releases..."
-    local url="https://github.com/user-why-red/san_gcc_toolchain_x86_64/releases/download/20231221/san-gcc-toolchain-x86_64-20231221.tar.gz"
-    wget "$url" -O "$HOME/san-gcc-toolchain-x86_64-20231221.tar.gz"
+    local url="https://github.com/user-why-red/san_gcc_toolchain_x86_64/releases/download/20240605/san-gcc-toolchain-x86_64-20240605.tar.gz"
+    wget "$url" -O "$HOME/san-gcc-toolchain-x86_64-20240605.tar.gz"
 
     if [[ $? -ne 0 ]]; then
         echo "Failed to download release package"
