@@ -57,7 +57,7 @@ download_san_release_package() {
     fi
     echo "Release package downloaded successfully"
     echo "Extracting downloaded tarball..."
-    tar -xvf "$HOME/san-gcc-toolchain-x86_64-20231221.tar.gz" -C "$HOME"
+    tar -xvf "$HOME/san-gcc-toolchain-x86_64-20240605.tar.gz" -C "$HOME"
     if [[ $? -ne 0 ]]; then
         echo "Failed to extract release package"
         exit 1
